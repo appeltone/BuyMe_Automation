@@ -2,7 +2,7 @@ package com.appel.pages;
 
 import org.openqa.selenium.By;
 
-public class SenderReceiverInfoPage extends BasePage{
+public class SenderReceiverInfoPage extends BasePage {
 
     By someoneElseRadioButton = By.xpath("/html/body/div[2]/div/div[2]/form/div[1]/div/div/div[1]/div/div[2]/div[1]/div/div[1]/label[1]/span[1]");
     By receiverNameField = By.xpath("/html/body/div[2]/div/div[2]/form/div[1]/div/div/div[1]/div/div[2]/div[1]/div/div[2]/label[1]/input");
@@ -16,47 +16,47 @@ public class SenderReceiverInfoPage extends BasePage{
     By saveEmailButton = By.xpath("/html/body/div[2]/div/div[2]/form/div[1]/div/div/div[1]/div/div[2]/div[4]/div/div[4]/div/div[2]/button[2]");
 
 
-    public void clickSomeoneElseRadioButton(){
+    public void clickSomeoneElseRadioButton() {
         clickElement(someoneElseRadioButton);
     }
 
-    public void typeInReceiverName(){
+    public void typeInReceiverName() {
         sendKeysToElement(receiverNameField, Constants.RECEIVER_NAME);
     }
 
-    public void typeInSenderName(){
+    public void typeInSenderName() {
         sendKeysToElement(senderNameField, Constants.SENDER_NAME);
     }
 
-    public void clickEventDropDown(){
+    public void clickEventDropDown() {
         clickElement(eventDropDown);
     }
 
-    public void  selectFromDropDown(){
+    public void selectFromDropDown() {
         clickElement(eventDropDownSelection);
     }
 
-    public void clearBlessingTextArea(){
+    public void clearBlessingTextArea() {
         clearTextAreaText(blessingTextArea);
     }
 
-    public void typeInBlessing(){
+    public void typeInBlessing() {
         sendKeysToElement(blessingTextArea, Constants.BLESSING_TO_SEND);
     }
 
-    public void clickSendNowRadioButton(){
+    public void clickSendNowRadioButton() {
         clickElement(sendNowRadioButton);
     }
 
-    public void chooseSendByEmail(){
+    public void chooseSendByEmail() {
         clickElement(sendByEmail);
     }
 
-    public void typeInReceiverEmail(){
+    public void typeInReceiverEmail() {
         sendKeysToElement(receiverEmail, Constants.RECEIVER_EMAIL);
     }
 
-    public void clickSaveEmailButton(){
+    public void clickSaveEmailButton() {
         clickElement(saveEmailButton);
     }
 

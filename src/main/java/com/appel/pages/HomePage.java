@@ -2,10 +2,12 @@ package com.appel.pages;
 
 import org.openqa.selenium.By;
 
-public class HomePage extends BasePage{
+public class HomePage extends BasePage {
 
     //define locators for this page
+    //By registrationButton = By.xpath("/html/body/div[2]/div/header/div[1]/div/ul[1]/li[3]/a/span[2]");
     By registrationButton = By.xpath("/html/body/div[2]/div/header/div[1]/div/ul[1]/li[3]/a/span[2]");
+
     By amountDropDown = By.xpath("/html/body/div[2]/div/header/div[3]/div/form/div[1]/a/span");
     By amountDropDownSelected = By.xpath("/html/body/div[2]/div/header/div[3]/div/form/div[1]/div/ul/li[5]");
     By areaDropDown = By.xpath("/html/body/div[2]/div/header/div[3]/div/form/div[2]/a/span");
@@ -16,48 +18,44 @@ public class HomePage extends BasePage{
     By afterLoginRegButton = By.xpath("/html/body/div[2]/div/header/div[1]/div/ul[1]/li[3]/a/span");
 
 
-    public void clickRegistrationButton (){
-        clickElement(registrationButton);
+    public void clickRegistrationButton() {
+        clickElementWithWait(registrationButton);
     }
 
-    public void clickAmountDropDown(){
+    public void clickAmountDropDown() {
         clickElementWithWait(amountDropDown);
     }
 
-    public void selectAmountFromDropDown(){
+    public void selectAmountFromDropDown() {
         clickElement(amountDropDownSelected);
     }
 
-    public void clickAreaDropDown(){
+    public void clickAreaDropDown() {
         clickElementWithWait(areaDropDown);
     }
 
-    public void selectAreaFromDropDown(){
+    public void selectAreaFromDropDown() {
         clickElement(areaDropDownSelected);
     }
 
-    public void clickCategoryDropDown(){
+    public void clickCategoryDropDown() {
         clickElementWithWait(categoryDropDown);
     }
 
-    public void selectCategoryFromDropDown(){
+    public void selectCategoryFromDropDown() {
         clickElement(categoryDropDownSelected);
     }
 
-    public void clickFindMeAGiftButton(){
+    public void clickFindMeAGiftButton() {
         clickElement(findMeAGiftButton);
     }
 
-    public String getAfterLoginRegButtonText(){
+    public String getAfterLoginRegButtonText() {
         return getTextFromElement(afterLoginRegButton);
     }
 
-    public boolean verifyButtonTextExist(){
+    public boolean verifyButtonTextExist() {
         return waitForElementTextToAppear(afterLoginRegButton, Constants.VERIFY_LOGIN);
-    }
-
-    public boolean verifyURLAfterHomeScreenSelection(){
-        return waitForURLToAppear(Constants.VERIFY_HOMESCREEN_SELECTION_URL);
     }
 
 }

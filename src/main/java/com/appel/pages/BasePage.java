@@ -25,23 +25,21 @@ public class BasePage {
     }
 
     public void clickElementWithWait(By locator) {
-        element = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+        element = wait.until(ExpectedConditions.elementToBeClickable(locator));
         element.click();
     }
 
-    public boolean waitForElementTextToAppear(By locator, String text){
+    public boolean waitForElementTextToAppear(By locator, String text) {
         Boolean textAppear = wait.until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
         return textAppear;
     }
 
-    public boolean waitForURLToAppear(String url){
+    public boolean waitForURLToAppear(String url) {
         Boolean urlExist = wait.until(ExpectedConditions.urlToBe(url));
         return urlExist;
     }
 
-
-
-    public void sendKeysToElement(By locator, String text){
+    public void sendKeysToElement(By locator, String text) {
         driver.findElement(locator).sendKeys(text);
     }
 
@@ -49,15 +47,15 @@ public class BasePage {
         driver.findElement(locator).sendKeys(Keys.ENTER);
     }
 
-    public String getTextFromElement(By locator){
+    public String getTextFromElement(By locator) {
         return driver.findElement(locator).getText();
     }
 
-    public String getValueFromElement(By locator){
+    public String getValueFromElement(By locator) {
         return driver.findElement(locator).getAttribute("value");
     }
 
-    public void clearTextAreaText(By locator){
+    public void clearTextAreaText(By locator) {
         driver.findElement(locator).clear();
     }
 

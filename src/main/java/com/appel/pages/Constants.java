@@ -11,7 +11,7 @@ public class Constants {
     public static final String CHROME_DRIVER_KEY = "webdriver.chrome.driver";
     public static final String CHROME_DRIVER_VALUE = "D:\\Selenium_Drivers\\chromedriver.exe";
     public static final String FIRST_NAME = "ערן";
-    public static final String EMAIL = "me3@gmail.com";
+    public static final String EMAIL = "me4@gmail.com";
     public static final String PASSWORD = "Password1";
     public static final Boolean ACCOUNT_EXIST = true;
     public static final String URL = "https://buyme.co.il/";

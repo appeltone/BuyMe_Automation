@@ -7,6 +7,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.security.KeyStore;
 import java.util.concurrent.TimeUnit;
 
 public class IntroPageTest {
@@ -42,9 +43,10 @@ public class IntroPageTest {
             Assert.assertEquals(introPage.getemailFieldText(), Constants.EMAIL);
             Assert.assertEquals(introPage.getpassFieldText(), Constants.PASSWORD);
             Assert.assertEquals(introPage.getpassVerifyFieldText(), Constants.PASSWORD);
+            introPage.submitRegData();
         }
 
-        introPage.submitRegData();
+
 
         //assert login passed
         if (homePage.verifyButtonTextExist()) {
@@ -57,16 +59,17 @@ public class IntroPageTest {
 
         homePage.clickAmountDropDown();
         homePage.selectAmountFromDropDown();
+
         homePage.clickAreaDropDown();
         homePage.selectAreaFromDropDown();
+
         homePage.clickCategoryDropDown();
         homePage.selectCategoryFromDropDown();
 
         homePage.clickFindMeAGiftButton();
 
-        if (homePage.waitForURLToAppear(Constants.VERIFY_HOMESCREEN_SELECTION_URL)) {
-            Assert.assertEquals(driver.getCurrentUrl(), Constants.VERIFY_HOMESCREEN_SELECTION_URL);
-        }
+        Assert.assertEquals(homePage.waitForURLToAppear(Constants.VERIFY_HOMESCREEN_SELECTION_URL), true);
+
     }
 
     @Test(dependsOnMethods = {"HomeScreenSelectionsTest"})
@@ -75,18 +78,15 @@ public class IntroPageTest {
 //        if (driver.getCurrentUrl() != "https://buyme.co.il/supplier/352936") {
 //            driver.navigate().back();
 //        }
+
         businessResultPage.clickBusinessFromResults();
         businessResultPage.enterAmountForGiftCard();
         businessResultPage.clickGiftCardChooseButton();
 
-//        if (driver.getCurrentUrl() != "hhttps://buyme.co.il/money/352936") {
-//            driver.navigate().back();
-//        }
-
 
     }
 
-    //@Test(dependsOnMethods = {"pickBusinessTest"})
+    @Test(dependsOnMethods = {"pickBusinessTest"})
     public void senderReceiverInformationTest() {
 
 
@@ -101,7 +101,6 @@ public class IntroPageTest {
         senderReceiverInfoPage.chooseSendByEmail();
         senderReceiverInfoPage.typeInReceiverEmail();
         senderReceiverInfoPage.clickSaveEmailButton();
-
 
     }
 
