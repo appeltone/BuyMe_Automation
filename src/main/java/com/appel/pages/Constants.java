@@ -19,5 +19,8 @@ public class Constants {
     public static final String VERIFY_LOGIN = "החשבון שלי";
     public static final String VERIFY_HOMESCREEN_SELECTION_URL = "https://buyme.co.il/search?budget=4&category=204&region=13";
     public static final String GIFT_CARD_AMOUNT = "500";
+    public static final String EMAIL_EMPTY_ERROR = "כל המתנות מחכות לך! אבל קודם צריך מייל וסיסמה";
+    public static final String PASS_EMPTY_ERROR = "כל המתנות מחכות לך! אבל קודם צריך מייל וסיסמה";
+
 
 }

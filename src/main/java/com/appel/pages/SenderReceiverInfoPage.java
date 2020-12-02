@@ -24,8 +24,19 @@ public class SenderReceiverInfoPage extends BasePage {
         sendKeysToElement(receiverNameField, Constants.RECEIVER_NAME);
     }
 
+    public void clearSenderNameField(){
+        clearTextAreaText(senderNameField);
+    }
     public void typeInSenderName() {
         sendKeysToElement(senderNameField, Constants.SENDER_NAME);
+    }
+
+    public String getReceiverNameText() {
+        return(getValueFromElement(receiverNameField));
+    }
+
+    public String getSenderNameText() {
+        return(getValueFromElement(senderNameField));
     }
 
     public void clickEventDropDown() {

@@ -4,10 +4,7 @@ import org.openqa.selenium.By;
 
 public class HomePage extends BasePage {
 
-    //define locators for this page
-    //By registrationButton = By.xpath("/html/body/div[2]/div/header/div[1]/div/ul[1]/li[3]/a/span[2]");
     By registrationButton = By.xpath("/html/body/div[2]/div/header/div[1]/div/ul[1]/li[3]/a/span[2]");
-
     By amountDropDown = By.xpath("/html/body/div[2]/div/header/div[3]/div/form/div[1]/a/span");
     By amountDropDownSelected = By.xpath("/html/body/div[2]/div/header/div[3]/div/form/div[1]/div/ul/li[5]");
     By areaDropDown = By.xpath("/html/body/div[2]/div/header/div[3]/div/form/div[2]/a/span");
