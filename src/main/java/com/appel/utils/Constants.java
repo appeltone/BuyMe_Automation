@@ -9,7 +9,9 @@ public class Constants {
     public static final String SENDER_NAME = "מרסלוס וואלס";
     public static final String BLESSING_TO_SEND = "the force is strong with you my young padawan";
     public static final String CHROME_DRIVER_KEY = "webdriver.chrome.driver";
+    public static final String FIREFOX_DRIVER_KEY = "webdriver.gecko.driver";
     public static final String CHROME_DRIVER_VALUE = "D:\\Selenium_Drivers\\chromedriver.exe";
+    public static final String FIREFOX_DRIVER_VALUE = "D:\\Selenium_Drivers\\geckodriver.exe";
     public static final String FIRST_NAME = "ערן";
     public static final String EMAIL = "me4@gmail.com";
     public static final String PASSWORD = "Password1";

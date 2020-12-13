@@ -17,11 +17,10 @@ public class DriverSingleton {
                 driver = new ChromeDriver();
             }
             else if (browserType.equals("Firefox")){
-                System.setProperty(Constants.CHROME_DRIVER_KEY, Constants.CHROME_DRIVER_VALUE);
+                System.setProperty(Constants.FIREFOX_DRIVER_KEY, Constants.FIREFOX_DRIVER_VALUE);
                 driver = new FirefoxDriver();
             }
         }
-        //driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return driver;
     }
