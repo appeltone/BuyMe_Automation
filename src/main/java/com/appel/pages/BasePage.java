@@ -1,9 +1,11 @@
 package com.appel.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.appel.utils.*;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -16,13 +18,21 @@ public class BasePage {
     private WebDriver driver;
     private WebElement element;
     private WebDriverWait wait;
+    private ExtentTest test;
+    private ExtentReports extent;
 
     /***
      * Fetching WebDriver instance from DriverSingleton and WebDriverWait instance from WaitSingleton
+     * Fetching ExtextReports object in order to fetch ExtentTest object
+     * Fetching ExtentTest object while sending ExtentReports for instantiating
      */
     public BasePage() {
-        this.driver = DriverSingleton.getWebDriverInstance();
+        this.driver = DriverSingleton.getWebDriverInstance(XMLReader.getData("browserType"));
         this.wait = WaitSingleton.getWebDriverWaitInstance(driver);
+        extent = ExtentReportsSingleton.getExtentReportsInstance();
+        test = ExtentTestSingleton.getExtentTestInstance(extent);
+
+
     }
 
     /***
@@ -30,7 +40,15 @@ public class BasePage {
      * @param locator is the desired locator sent by each of the child classes (web pages)
      */
     public void clickElement(By locator) {
-        driver.findElement(locator).click();
+        try {
+            driver.findElement(locator).click();
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            String timeNow = String.valueOf(System.currentTimeMillis());
+            test.fail("Failed to click (element not found) -->> " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromPath(ScreenShotMaker.takeScreenShot(timeNow, driver)).build());
+        }
+
     }
 
     /***
@@ -39,8 +57,15 @@ public class BasePage {
      * @param locator is the desired locator sent by each of the child classes (web pages)
      */
     public void clickElementWithWait(By locator) {
-        element = wait.until(ExpectedConditions.elementToBeClickable(locator));
-        element.click();
+        try {
+            element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+            element.click();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+            String timeNow = String.valueOf(System.currentTimeMillis());
+            test.fail("Element was not clickable in time frame given: " + Constants.WAIT_TIMEOUT_SEC + " seconds -->> " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromPath(ScreenShotMaker.takeScreenShot(timeNow, driver)).build());
+        }
     }
 
     /***
@@ -50,8 +75,15 @@ public class BasePage {
      * @return returns True if the desired text is present in element
      */
     public boolean waitForElementTextToAppear(By locator, String text) {
-        Boolean textAppear = wait.until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
-        return textAppear;
+        boolean textAppear = false;
+        try {
+            textAppear = wait.until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
+            return textAppear;
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            test.log(Status.FAIL, "Failed to find text (element not found) -->> " + e.getMessage());
+        }
+        return false;
     }
 
     /***
@@ -61,8 +93,15 @@ public class BasePage {
      * @return returns True if URL is presented in time range
      */
     public boolean waitForURLToAppear(String url) {
-        Boolean urlExist = wait.until(ExpectedConditions.urlToBe(url));
-        return urlExist;
+        boolean urlExist = false;
+        try {
+            urlExist = wait.until(ExpectedConditions.urlToBe(url));
+            return urlExist;
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+            test.log(Status.FAIL, "URL given : " + Constants.VERIFY_HOMESCREEN_SELECTION_URL + " was not found" + e.getMessage());
+        }
+        return false;
     }
 
     /***
@@ -71,7 +110,14 @@ public class BasePage {
      * @param text text to send to the desired element
      */
     public void sendKeysToElement(By locator, String text) {
-        driver.findElement(locator).sendKeys(text);
+        try {
+            driver.findElement(locator).sendKeys(text);
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            String timeNow = String.valueOf(System.currentTimeMillis());
+            test.fail("Failed to send keys to element (element not found) -->> " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromPath(ScreenShotMaker.takeScreenShot(timeNow, driver)).build());
+        }
     }
 
     /***
@@ -79,7 +125,14 @@ public class BasePage {
      * @param locator is the desired locator sent by each of the child classes (web pages)
      */
     public void sendEnterToElement(By locator) {
-        driver.findElement(locator).sendKeys(Keys.ENTER);
+        try {
+            driver.findElement(locator).sendKeys(Keys.ENTER);
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            String timeNow = String.valueOf(System.currentTimeMillis());
+            test.fail("Failed to send ENTER to element (element not found) -->> " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromPath(ScreenShotMaker.takeScreenShot(timeNow, driver)).build());
+        }
     }
 
     /***
@@ -88,7 +141,15 @@ public class BasePage {
      * @return returns the text from the desired element
      */
     public String getTextFromElement(By locator) {
-        return driver.findElement(locator).getText();
+        try {
+            return driver.findElement(locator).getText();
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            String timeNow = String.valueOf(System.currentTimeMillis());
+            test.fail("Failed to get text from element (element not found) -->> " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromPath(ScreenShotMaker.takeScreenShot(timeNow, driver)).build());
+        }
+        return null;
     }
 
     /***
@@ -97,7 +158,15 @@ public class BasePage {
      * @return returns the attribute value (text from input box)
      */
     public String getValueFromElement(By locator) {
-        return driver.findElement(locator).getAttribute("value");
+        try {
+            return driver.findElement(locator).getAttribute("value");
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            String timeNow = String.valueOf(System.currentTimeMillis());
+            test.fail("Failed to get value from element (element not found) -->> " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromPath(ScreenShotMaker.takeScreenShot(timeNow, driver)).build());
+        }
+        return null;
     }
 
     /***

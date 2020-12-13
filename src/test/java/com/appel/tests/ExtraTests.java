@@ -1,6 +1,10 @@
 package com.appel.tests;
 
 import com.appel.pages.*;
+import com.appel.utils.Constants;
+import com.appel.utils.DriverSingleton;
+import com.appel.utils.WaitSingleton;
+import com.appel.utils.XMLReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -24,7 +28,8 @@ public class ExtraTests {
 
     @BeforeClass
     public void setUpEnv() {
-        driver = DriverSingleton.getWebDriverInstance();
+        String browserType = XMLReader.getData("browserType");
+        driver = DriverSingleton.getWebDriverInstance(browserType);
         driver.get(Constants.URL);
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);

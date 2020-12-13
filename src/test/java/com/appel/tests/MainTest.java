@@ -1,36 +1,46 @@
 package com.appel.tests;
 
 import com.appel.pages.*;
+import com.appel.utils.*;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import java.util.concurrent.TimeUnit;
-
 public class MainTest {
-    public WebDriver driver;
-    public HomePage homePage;
-    public LoginAndRegistrationPage introPage;
-    public BusinessResultPage businessResultPage;
-    public SenderReceiverInfoPage senderReceiverInfoPage;
+    private WebDriver driver;
+    private HomePage homePage;
+    private LoginAndRegistrationPage introPage;
+    private BusinessResultPage businessResultPage;
+    private SenderReceiverInfoPage senderReceiverInfoPage;
+    private ExtentTest test;
+    private ExtentReports extent;
+    private String timeNow;
 
     @BeforeClass
     public void setUpEnv() {
-        driver = DriverSingleton.getWebDriverInstance();
-        driver.get(Constants.URL);
+        String browserType = XMLReader.getData("browserType");
+        driver = DriverSingleton.getWebDriverInstance(browserType);
+        driver.get(XMLReader.getData("testUrl"));
         driver.manage().window().maximize();
-        driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         homePage = new HomePage();
         introPage = new LoginAndRegistrationPage();
         businessResultPage = new BusinessResultPage();
         senderReceiverInfoPage = new SenderReceiverInfoPage();
+
+        extent = ExtentReportsSingleton.getExtentReportsInstance();
+        test = ExtentTestSingleton.getExtentTestInstance(extent);
+        test.log(Status.INFO, "@Before class");
     }
 
 
     @Test(priority = 0)
     public void loginRegistrationTest() {
 
+        test.log(Status.INFO,"@Test [Login / Registration Test] Starting");
         homePage.clickRegistrationButton();
         introPage.enterSite(Constants.FIRST_NAME, Constants.EMAIL, Constants.PASSWORD, Constants.ACCOUNT_EXIST);
 
@@ -50,39 +60,41 @@ public class MainTest {
         //assert login passed
         if (homePage.verifyButtonTextExist()) {
             Assert.assertEquals(homePage.getAfterLoginRegButtonText(), Constants.VERIFY_LOGIN);
+            timeNow = String.valueOf(System.currentTimeMillis());
+            test.log(Status.PASS,"@Test [Login / Registration Test] Passed successfully",
+                    MediaEntityBuilder.createScreenCaptureFromPath(ScreenShotMaker.takeScreenShot(timeNow, driver)).build());
         }
     }
 
 
     @Test(priority = 1)
-    public void HomeScreenSelectionsTest() {
+    public void homeScreenSelectionsTest() {
+        test.log(Status.INFO,"@Test [Home Screen Selections Test] Starting");
 
-        homePage.clickAmountDropDown();
-        homePage.selectAmountFromDropDown();
-
-        homePage.clickAreaDropDown();
-        homePage.selectAreaFromDropDown();
-
-        homePage.clickCategoryDropDown();
-        homePage.selectCategoryFromDropDown();
-
+        homePage.selectPresentToSearch();
         homePage.clickFindMeAGiftButton();
 
+        Assert.assertEquals(homePage.waitForURLToAppear(Constants.VERIFY_HOMESCREEN_SELECTION_URL), true);
+        test.log(Status.PASS,"@Test [Home Screen Selections Test] Passed successfully");
     }
 
     @Test(priority = 2)
     public void pickBusinessTest() {
 
-        Assert.assertEquals(homePage.waitForURLToAppear(Constants.VERIFY_HOMESCREEN_SELECTION_URL), true);
+        test.log(Status.INFO,"@Test [Pick Business Test] Starting");
 
         businessResultPage.clickBusinessFromResults();
         businessResultPage.enterAmountForGiftCard();
         businessResultPage.clickGiftCardChooseButton();
 
+        test.log(Status.PASS,"@Test [Pick Business Test] Passed successfully");
+
     }
 
     @Test(priority = 3)
     public void senderReceiverInformationTest() throws InterruptedException {
+
+        test.log(Status.INFO,"@Test [Sender Receiver Information Test] Starting");
 
         senderReceiverInfoPage.clickSomeoneElseRadioButton();
         senderReceiverInfoPage.typeInReceiverName();
@@ -100,11 +112,13 @@ public class MainTest {
         //assert Sender and Receiver names
         Assert.assertEquals(senderReceiverInfoPage.getReceiverNameText(), Constants.RECEIVER_NAME);
         Assert.assertEquals(senderReceiverInfoPage.getSenderNameText(), Constants.SENDER_NAME);
-
+        test.log(Status.PASS,"@Test [Sender Receiver Information Test] Passed successfully");
     }
 
     @AfterClass
     public void tearDown() {
         driver.quit();
+        extent.flush();
+        test.log(Status.INFO, "@After class");
     }
 }

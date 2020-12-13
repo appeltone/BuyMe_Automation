@@ -1,5 +1,6 @@
 package com.appel.pages;
 
+import com.appel.utils.Constants;
 import org.openqa.selenium.By;
 
 public class SenderReceiverInfoPage extends BasePage {

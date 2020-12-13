@@ -1,5 +1,6 @@
 package com.appel.pages;
 
+import com.appel.utils.Constants;
 import org.openqa.selenium.By;
 
 public class HomePage extends BasePage {
@@ -14,6 +15,15 @@ public class HomePage extends BasePage {
     By findMeAGiftButton = By.xpath("/html/body/div[2]/div/header/div[3]/div/form/a");
     By afterLoginRegButton = By.xpath("/html/body/div[2]/div/header/div[1]/div/ul[1]/li[3]/a/span");
 
+
+    public void selectPresentToSearch(){
+        clickAmountDropDown();
+        selectAmountFromDropDown();
+        clickAreaDropDown();
+        selectAreaFromDropDown();
+        clickCategoryDropDown();
+        selectCategoryFromDropDown();
+    }
 
     public void clickRegistrationButton() {
         clickElementWithWait(registrationButton);

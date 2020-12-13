@@ -1,7 +1,7 @@
 package com.appel.pages;
 
 import org.openqa.selenium.By;
-import org.testng.Assert;
+
 
 public class LoginAndRegistrationPage extends BasePage {
 
@@ -14,7 +14,6 @@ public class LoginAndRegistrationPage extends BasePage {
     private By passVerifyField = By.xpath("/html/body/div[2]/div/div[1]/div/div/div[3]/div/div[3]/form/div[4]/label/input");
     private By regSubmitButton = By.xpath("/html/body/div[2]/div/div[1]/div/div/div[3]/div/div[3]/form/button");
     private By loginSubmitButton = By.xpath("/html/body/div[2]/div/div[1]/div/div/div[3]/div/div[3]/form/button");
-
     private By emailEmptyErrorMessage = By.xpath("/html/body/div[2]/div/div[1]/div/div/div[3]/div/div[3]/form/div[1]/label/ul/li");
     private By passEmptyErrorMessage = By.xpath("/html/body/div[2]/div/div[1]/div/div/div[3]/div/div[3]/form/div[2]/label/ul/li");
 

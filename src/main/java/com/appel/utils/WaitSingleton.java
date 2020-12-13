@@ -1,4 +1,4 @@
-package com.appel.pages;
+package com.appel.utils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
